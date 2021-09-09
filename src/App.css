@@ -31,3 +31,17 @@ address{
 .navbar-dark {
     background-color: #512DA8;
 }
+.home-card{
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+.about-card{
+    margin-left: 15%;
+    margin-top: -16%;
+}
+.about-img{
+    padding: 26px;
+}
+.about-font{
+    font-weight: bold;
+}
