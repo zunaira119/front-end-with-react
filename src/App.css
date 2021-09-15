@@ -45,3 +45,6 @@ address{
 .about-font{
     font-weight: bold;
 }
+.form-input{
+    margin-bottom: 2%;
+}
