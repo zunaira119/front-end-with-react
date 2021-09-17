@@ -5,6 +5,7 @@ import { Card, CardImg, CardText, CardBody, CardTitle,Breadcrumb, BreadcrumbItem
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
  function  RenderDish ({dish}) {
     return (
       <div className="col-12 col-md-5 m-1">
@@ -20,20 +21,25 @@ import { baseUrl } from '../shared/baseUrl';
   }
 
  function RenderComments ( {comments,postComment, dishId} ) {
-    const cmnts = comments.map(item => {
-      return (
-        <li key={item.id}>
-          <p>{item.comment}</p>
-          <p>-- {item.author} , {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(item.date)))}</p>
-        </li>
-      );
-    });
-
+if(comments !=null)
     return (
       <div className="col-12 col-md-5 m-1">
         <h4>Comments</h4>
         <ul className="list-unstyled">
-          {cmnts}
+        <Stagger in>
+        {comments.map((comment) => {
+          return(
+            <Fade in>
+            <li key={comment.id}>
+              <p>{comment.comment}</p>
+              <p>-- {comment.author} , {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
+            </li>
+            </Fade>
+          );
+          })
+        }
+          </Stagger>
+     
         </ul>
         <CommentForm dishId={dishId} postComment={postComment} />
       </div>

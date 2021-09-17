@@ -2,7 +2,7 @@ import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
 
 export const addComment = (comment) => ({
-    type: ActionTypes.ADD_COMMENTS,
+    type: ActionTypes.ADD_COMMENT,
     payload: comment
 });
 
@@ -12,9 +12,10 @@ export const postComment = (dishId, rating, author, comment) => (dispatch) => {
         dishId: dishId,
         rating: rating,
         author: author,
-        comment: comment
+        comment: comment,
+        date:new Date().toISOString()
     };
-    newComment.date = new Date().toISOString();
+    // newComment.date = new Date().toISOString();
     
     return fetch(baseUrl + 'comments', {
         method: "POST",
@@ -178,4 +179,50 @@ export const leadersFailed = (errmess) =>({
 export const addLeaders = (leaders) =>({
     type:ActionTypes.ADD_LEADERS,
     payload:leaders
+});
+
+export const postFeedback = (firstname, lastname, email, telnum,agree,contactType,message,id) => (dispatch) => {
+
+  const newFeedback = {
+  
+    firstname: firstname,
+    lastname: lastname,
+    email: email,
+    telnum: telnum,
+    agree:agree,
+    contactType:contactType,
+    message:message,
+    date:new Date().toISOString(),
+    id:id
+  };
+  // newComment.date = new Date().toISOString();
+  
+  return fetch(baseUrl + 'feedback', {
+      method: "POST",
+      body: JSON.stringify(newFeedback),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "same-origin"
+  })
+  .then(response => {
+      if (response.ok) {
+        return response;
+      } else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+    error => {
+          throw error;
+    })
+  .then(response => response.json())
+  .then(response => dispatch(addFeedback(response)))
+  .catch(error =>  { console.log('post feedback', error.message); alert('Your feedback could not be posted\nError: '+error.message); });
+};
+
+export const addFeedback = (feedback) => ({
+  type: ActionTypes.ADD_FEEDBACK,
+  payload: feedback
 });
