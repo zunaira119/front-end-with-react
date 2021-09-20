@@ -181,25 +181,12 @@ export const addLeaders = (leaders) =>({
     payload:leaders
 });
 
-export const postFeedback = (firstname, lastname, email, telnum,agree,contactType,message,id) => (dispatch) => {
-
-  const newFeedback = {
-  
-    firstname: firstname,
-    lastname: lastname,
-    email: email,
-    telnum: telnum,
-    agree:agree,
-    contactType:contactType,
-    message:message,
-    date:new Date().toISOString(),
-    id:id
-  };
+export const postFeedback = (feedback) => (dispatch) => {
   // newComment.date = new Date().toISOString();
   
   return fetch(baseUrl + 'feedback', {
       method: "POST",
-      body: JSON.stringify(newFeedback),
+      body: JSON.stringify(feedback),
       headers: {
         "Content-Type": "application/json"
       },
